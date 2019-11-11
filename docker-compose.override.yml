@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  theorycupids:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      # Need a certificate to run it in HTTPS
+      #- ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_HTTPS_PORT=44331
+    ports:
+      - "80:80"
+      - "443:443"
+      #- "50928:80"
+      #- "44331:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  theorycupids:
+    image: ${DOCKER_REGISTRY-}theorycupids
+    container_name: theorycupids-dotnet
+    build:
+      context: .
+      dockerfile: TheoryCupids/Dockerfile
+    depends_on:
+      - db
+  db:
+    image: mysql
+    container_name: theorycupids-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: TheoryCupidsDB
+    volumes:
+       - dbdata:/var/lib/mysql
+       - ./initdb:/docker-entrypoint-initdb.d
+    restart: always
+volumes:
+  dbdata:
